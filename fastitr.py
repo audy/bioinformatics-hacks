@@ -42,6 +42,6 @@ class fastitr:
                     header = line.strip()
                     sequence = []
                 else:
-                    sequence.append(line)
+                    sequence.append(line.strip())
                     
             yield dnaobj(header, ''.join(sequence))
