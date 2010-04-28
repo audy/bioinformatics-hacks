@@ -9,7 +9,7 @@ harekrishna@gmail.com
 =========
 
 GPL v3
-See GPL.tex or go to http://www.gnu.org/licenses/gpl-3.0-standalone.html
+Go to http://www.gnu.org/licenses/gpl-3.0-standalone.html
 
 Oh, and these scripts are distributed with *ABSOLUTELY NO WARRANTY!*
 
