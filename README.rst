@@ -20,21 +20,32 @@ A collection of Python scripts that I've had to write to solve little problems.
 I decided to make them available so people can laugh at me.
 
 	*random_fasta.py <input.fasta> <number>*
+	
 	prints out random records from a given input file.
 
+
 	*chim_gen.py <input.fasta> <number>*
+
 	Generates chimeras from input fasta file.  Breakpoints are random.
+
 	
 	*truncate.py <input.fasta> <start> <end>*
+
 	Truncates records in input fasta file.  You can use negative numbers
 	to truncate from the right side.
+
 	
 	*quick_filter.py <input.fasta> <keyword>*
+
 	Filters out records with keyword in the header.
+
 	
 	*dnaobj.py & fastitr.py*
+
 	I was using these for FASTA iteration but not so much anymore.
+
 	
 	*silva_filter.py <inputfile>*
+
 	Used to remove ambiguous nucleotides from RNA sequences, and then convert
 	them to DNA.  I could have probably just used sed for this.
