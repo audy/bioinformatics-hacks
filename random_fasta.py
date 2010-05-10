@@ -50,7 +50,7 @@ def main(argv):
     howmany = int(argv[2])
     records = [ record for record in fasta(handle) ]
     
-    length = len(records)
+    length = len(records) -1
     
     for i in range(0, howmany):
         random_record = records[random.randint(0, length)]
