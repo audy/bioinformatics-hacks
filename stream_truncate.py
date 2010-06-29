@@ -1,3 +1,9 @@
+# Truncates a FASTA file input from a stream:
+
+# i.e.
+# $ cat felis_catus.fasta | python stream_truncate.py 0 300 > truncated_cat.fa
+# ^ This will truncate all records from 0 to 300.
+
 import sys
 
 header = ''
