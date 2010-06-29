@@ -19,38 +19,36 @@ class Dna:
         self.header = header[1:]
         self.sequence = sequence
         self.quality = quality
-        
         if quality:
             self.type = 'fastq'
         else:
             self.type = 'fasta'
-    
     def __str__(self):
         ''' returns a FASTA/Q formatted string '''
         if not self.quality:
             return ('>%s\n%s\n') % (self.header, self.sequence)
         else:
-            return('@%s\n%s\n+%s\n%s\n') % (self.header, self.sequence, self.header, self.quality)
-            
+            return('@%s\n%s\n+%s\n%s\n') % \
+                (self.header, self.sequence, self.header, self.quality)
     def __repr__(self):
         return '<dnaobj.%s instance: %s>' % (self.type, self.header)
-            
+    @attribute
     def complement(self):
         ''' returns complement of sequence '''
         return self.sequence.translate(_complement)
-            
-    def revcomplement(self):
+    @attribute
+    def revcomp(self):
         ''' returns reverse complement of sequence '''
         return self.complement()[::-1]
-        
-    def sequence(self):
+    @attribute    
+    def seq(self):
         ''' returns DNA sequence '''
-        return self.sequence
-        
-    def quality(self):
+        return ''.join(self.sequence)
+    @attribute
+    def qual(self):
         ''' returns quality '''
         return self.quality
-        
+    @attribute
     def nucqual(self):
         ''' returns ('sequence', 'quality') '''
         return self.sequence, self.quality
