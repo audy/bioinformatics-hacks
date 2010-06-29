@@ -3,8 +3,8 @@
 # TODO: Generates Names Hash for ChimeraChecker
 
 import sys
-from fastitr import *
-from dnaobj import *
+from fasta import *
+from dna import *
 
 def main(argv):
 
@@ -14,9 +14,9 @@ def main(argv):
     output = open(keyword + '_filtered.txt', 'w')
     
     handle = open(filename, 'r')
-    fasta = fastitr(handle, 'fasta')
+    fasta = Fasta(handle, 'fasta')
         
-    for record in fasta:
+    for record in Fasta:
         line = record.header.split()
         acc, name = line[0], ''.join(line[1:])
         names = name.lower().split(';')
