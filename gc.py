@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+
+# GC Count
+# Takes input from stdin.
+
 import sys
 
 for file in sys.argv[1:]:
