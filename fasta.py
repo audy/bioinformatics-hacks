@@ -38,10 +38,10 @@ class Fasta:
             sequence = []
             for line in self.handle:
                 if line[0] == '>':
-                    if sequence: yield dnaobj(header, ''.join(sequence))
+                    if sequence: yield dnaobj(header, sequence)
                     header = line.strip()
                     sequence = []
                 else:
                     sequence.append(line.strip())
                     
-            yield dnaobj(header, ''.join(sequence))
+            yield dnaobj(header, sequence)
