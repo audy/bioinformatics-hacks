@@ -32,23 +32,23 @@ class Dna:
                 (self.header, self.sequence, self.header, self.quality)
     def __repr__(self):
         return '<dnaobj.%s instance: %s>' % (self.type, self.header)
-    @attribute
+    @property
     def complement(self):
         ''' returns complement of sequence '''
         return self.sequence.translate(_complement)
-    @attribute
+    @property
     def revcomp(self):
         ''' returns reverse complement of sequence '''
         return self.complement()[::-1]
-    @attribute    
+    @property  
     def seq(self):
         ''' returns DNA sequence '''
         return ''.join(self.sequence)
-    @attribute
+    @property
     def qual(self):
         ''' returns quality '''
         return self.quality
-    @attribute
+    @property
     def nucqual(self):
         ''' returns ('sequence', 'quality') '''
         return self.sequence, self.quality

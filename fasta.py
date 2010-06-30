@@ -8,7 +8,7 @@ austingdr@gmail.com
 Triplett Lab, University of Florida
 '''
 
-from Dna import *
+from dna import *
 
 class Fasta:
     ''' iterates through a fasta or fastq file, returning dnaobj objects '''
@@ -31,17 +31,17 @@ class Fasta:
                 elif counter == 3:
                     rec[counter] = line.strip()
                     counter = 0        
-                    yield dnaobj(rec[0], rec[1], rec[3])
+                    yield Dna(rec[0], rec[1], rec[3])
                     
         elif self.filetype == 'fasta':
             header = ''
             sequence = []
             for line in self.handle:
                 if line[0] == '>':
-                    if sequence: yield dnaobj(header, sequence)
+                    if sequence: yield Dna(header, sequence)
                     header = line.strip()
                     sequence = []
                 else:
                     sequence.append(line.strip())
                     
-            yield dnaobj(header, sequence)
+            yield Dna(header, sequence)
