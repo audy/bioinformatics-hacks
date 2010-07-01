@@ -26,10 +26,10 @@ class Dna:
     def __str__(self):
         ''' returns a FASTA/Q formatted string '''
         if not self.quality:
-            return ('>%s\n%s\n') % (self.header, self.sequence)
+            return ('>%s\n%s\n') % (self.header, self.seq)
         else:
             return('@%s\n%s\n+%s\n%s\n') % \
-                (self.header, self.sequence, self.header, self.quality)
+                (self.header, self.seq, self.header, self.quality)
     def __repr__(self):
         return '<dnaobj.%s instance: %s>' % (self.type, self.header)
     @property
@@ -43,7 +43,7 @@ class Dna:
     @property  
     def seq(self):
         ''' returns DNA sequence '''
-        return ''.join(self.sequence)
+        return '\n'.join(self.sequence)
     @property
     def qual(self):
         ''' returns quality '''
