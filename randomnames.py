@@ -16,7 +16,7 @@ def main(argh):
     handle = open(filename)
 
     
-    for record in Fasta(handle, 'fastq'):
+    for record in Fasta(handle, 'fasta'):
         name = randy(0, 18446744073709552000)
         record.header = name
         print '%s' % record,
