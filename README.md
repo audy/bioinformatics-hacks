@@ -8,6 +8,9 @@ A collection of Python scripts that I've had to write to solve little problems. 
 
 ## Scripts
 
+* `get_taxids.rb`
+  Gets Taxonomy IDs from NCBI using Bioruby gem (`sudo gem install bioruby`) and Hpricot gem (`sudo gem install hpricot`).  You might wanna edit the script to parse _your_ fasta file.
+
 * `remdups.py <input.fastas>`
   Removes duplicate FASTA records
 
