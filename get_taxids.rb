@@ -9,7 +9,7 @@ require 'hpricot'
 Bio::NCBI.default_email = "harekrishna@gmail.com"
 
 ncbi = Bio::NCBI::REST.new
-file = File.new('how.fa', 'r')
+file = File.new(ARGV.pop, 'r')
 records = []
 
 file.each do |line|
