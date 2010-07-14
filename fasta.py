@@ -8,9 +8,9 @@ austingdr@gmail.com
 Triplett Lab, University of Florida
 '''
 
-from dnaobj import *
+from dna import *
 
-class fastitr:
+class Fasta:
     ''' iterates through a fasta or fastq file, returning dnaobj objects '''
     
     def __init__(self, handle, filetype):
@@ -31,17 +31,17 @@ class fastitr:
                 elif counter == 3:
                     rec[counter] = line.strip()
                     counter = 0        
-                    yield dnaobj(rec[0], rec[1], rec[3])
+                    yield Dna(rec[0], rec[1], rec[3])
                     
         elif self.filetype == 'fasta':
             header = ''
             sequence = []
             for line in self.handle:
                 if line[0] == '>':
-                    if sequence: yield dnaobj(header, ''.join(sequence))
+                    if sequence: yield Dna(header, sequence)
                     header = line.strip()
                     sequence = []
                 else:
                     sequence.append(line.strip())
                     
-            yield dnaobj(header, ''.join(sequence))
+            yield Dna(header, sequence)
