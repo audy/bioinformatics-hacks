@@ -36,7 +36,7 @@ def count(reads, barcodes):
                     tries.append(code)
                     break
             # Discard if it matches more than one
-            if len(trye) == 1: counts[code] += 1
+            #if len(trye) == 1: counts[code] += 1
 
 
     for k in counts:
