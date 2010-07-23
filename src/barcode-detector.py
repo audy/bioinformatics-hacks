@@ -30,10 +30,14 @@ def count(reads, barcodes):
         #if read in barcodes: counts[read] += 1
         else:
             # super inefficient!
+            tries = []
             for code in barcodes:
-                if score(zip(code, read)) >= 5:
-                    counts[code] += 1
-                else: continue
+                if score(zip(code, read)) <= 5:
+                    tries.append(code)
+                    break
+            # Discard if it matches more than one
+            if len(trye) == 1: counts[code] += 1
+
 
     for k in counts:
         print '%s => %s' % (k, counts[k])
