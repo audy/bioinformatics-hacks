@@ -8,6 +8,8 @@ A collection of Python scripts that I've had to write to solve little problems. 
 
 ## Scripts
 
+* `barcode-detector.py <illumina qseq barcodes file> <barcodes.txt>` finds 7bp self-correcting barcodes in an Illumina qseq file, compares them to random barcodes.
+
 * `get_taxids.rb <input.fasta>`
   Gets Taxonomy IDs from NCBI using Bioruby gem (`sudo gem install bioruby`) and Hpricot gem (`sudo gem install hpricot`).  You might wanna edit the script to parse _your_ fasta file.
 
