@@ -9,6 +9,10 @@ I decided to make them available so people can laugh at me.
 
 ## Scripts
 
+* `polynsplit.py <file>`
+	splits a single record FASTA file into a multi-fasta file betwixt stretches
+	of 10 or more Ns.
+
 * `barcode-detector.py <illumina qseq barcodes file> <barcodes.txt>` 
 	finds 7bp self-correcting barcodes in an Illumina qseq file, compares them
 	to random barcodes.
