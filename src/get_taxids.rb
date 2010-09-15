@@ -5,7 +5,7 @@ require 'rubygems'
 require 'Bio'
 require 'hpricot'
 
-# always tell NCBI who you are
+# always tell NCBI who they're messing with
 Bio::NCBI.default_email = "harekrishna@gmail.com"
 
 ncbi = Bio::NCBI::REST.new
