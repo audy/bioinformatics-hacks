@@ -22,7 +22,7 @@ end
 records.uniq!
 
 while records.length > 0
-  query = records.pop(30)
+  query = records.pop(100)
   retries = 5
   begin
     rec = ncbi.efetch(query.join(','), {"db"=>"nucleotide", "rettype"=>"gb", "retmode"=>"xml"})
