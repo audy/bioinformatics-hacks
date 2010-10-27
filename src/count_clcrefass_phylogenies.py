@@ -86,10 +86,10 @@ for first in unpaired:
                 merged_counts[';'.join(consensus)] = unpaired[first][second]
                 break
                  
-with open('unpaired.out', 'w') as hunpaired:
+with open('%s.unpaired.out' % sys.argv[2], 'w') as hunpaired:
     for c in merged_counts:
         print >> hunpaired, '%s, %s' % (c, merged_counts[c])
     
-with open('paired.out', 'w') as hpaired:
+with open('%s.paired.out' % sys.argv[2], 'w') as hpaired:
     for hit in paired:
         print >> hpaired, '%s, %s' % (rdp[hit], paired[hit])
