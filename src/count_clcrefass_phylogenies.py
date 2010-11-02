@@ -45,17 +45,17 @@ with open(f_db) as handle:
             try:
                 handle.next() # dont count twice, skip next line
             except StopIteration:
-                continue        
+                continue
         elif line[10] is '0': # then it's not paired
             current = int(line[5])
-            next = int(handle.next().split()[5])
-            if next in unpaired[current]:
-                unpaired[current][next] += 1
-            else:
-                unpaired[current][next] = 1
-
-
-
+            try:
+                next = int(handle.next().split()[5])
+                if next in unpaired[current]:
+                    unpaired[current][next] += 1
+                else:
+                    unpaired[current][next] = 1
+            except StopIteration:
+                continue
 
 # load RDP; we need random access!
 rdp, c = {}, 0
@@ -65,7 +65,7 @@ with open(f_rdp) as handle:
             c += 1
             rdp[c] = line[1:-1]
 
-    
+
 merged_counts = defaultdict(int) # getting uglier
 
 for first in unpaired:
@@ -86,10 +86,12 @@ for first in unpaired:
                 merged_counts[';'.join(consensus)] = unpaired[first][second]
                 break
                  
-with open('%s.unpaired.out' % sys.argv[2], 'w') as hunpaired:
+with open('%s.unpaired.out' % sys.argv[2], 'w') as handle:
     for c in merged_counts:
-        print >> hunpaired, '%s, %s' % (c, merged_counts[c])
+        print >> handle, '%s, %s' % (c, merged_counts[c])
     
-with open('%s.paired.out' % sys.argv[2], 'w') as hpaired:
+with open('%s.paired.out' % sys.argv[2], 'w') as handle:
     for hit in paired:
-        print >> hpaired, '%s, %s' % (rdp[hit], paired[hit])
+        print >> handle, '%s, %s' % (rdp[hit], paired[hit])
+    
+        
