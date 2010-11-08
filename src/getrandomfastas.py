@@ -21,6 +21,4 @@ with open(filename) as handle:
     records = Fasta(handle, 'fasta')
     for record in records:
         if random.choice(yesno):
-            print 'yes'
             print record
-        print 'no'
