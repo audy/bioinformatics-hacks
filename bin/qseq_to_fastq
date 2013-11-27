@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+__DESCRIPTION__ = '''
+
+qseq to fastq - convert two qseq files from paired-end sequencing
+to a single, interleaved fastq file
+
+qseq_to_fastq --left left_reads.txt --right right_reads.txt --out interleaved.fastq
+
+'''
+
+import argparse
+from itertools import izip
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--left')
+    parser.add_argument('--right')
+
+    parser.add_argument('--out', default='/dev/stdin')
+
+    return parser.parse_args()
+
+
+def to_fasta(s):
+
+    s = s.strip().split('\t')
+
+    header = ':'.join(s[0:8])
+    sequence = s[8].replace('.', 'N')
+    quality = s[9]
+
+    return '@%s\n%s\n+%s\n%s' % (header, sequence, header, quality)
+
+
+def main():
+
+    args = parse_args()
+
+    left_handle = open(args.left)
+    right_handle = open(args.right)
+    out_handle = open(args.out, 'w')
+
+    for l, r in izip(left_handle, right_handle):
+
+        l_fasta = to_fasta(l)
+        r_fasta = to_fasta(r)
+
+        print >> out_handle, l_fasta
+        print >> out_handle, r_fasta
+
+
+
+if __name__ == '__main__':
+    main()
