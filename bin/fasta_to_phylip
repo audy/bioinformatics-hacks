@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-DESCRIPTION = '''
+__DESCRIPTION__ = '''
 
 Convert a FASTA alignment to Phylip format.
 
