@@ -1,0 +1,33 @@
+#!/usr/bin/env python
+
+# Evaluate code on SeqIO record objects for each fasta record
+# in the input stream.
+
+# Example
+# eval-fasta --fasta-file seqs.fasta --param 'len(r)' # print lengths of sequences.
+
+import argparse
+from Bio import SeqIO
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-f', '--fasta-file', default='/dev/stdin')
+    parser.add_argument('-p', '--param', default=True, type=str)
+
+    return parser.parse_args()
+
+
+def main():
+
+    args = parse_args()
+
+    with open(args.fasta_file) as handle:
+        records = SeqIO.parse(handle, 'fasta')
+
+        for r in records:
+            print eval(args.param)
+
+
+if __name__ == '__main__':
+    main()
