@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+
+# Convert a FASTQ file to a FASTA file (remove quality scores)
+
+import argparse
+
+from Bio import SeqIO
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--fastq', default='/dev/stdin')
+    parser.add_argument('--fasta', default='/dev/stdout')
+
+    return parser.parse_args()
+
+
+def main():
+
+    args = parse_args()
+
+    output_handle = open(args.fasta, 'w')
+
+    with open(args.fastq) as input_handle:
+        records = SeqIO.parse(input_handle, 'fastq')
+
+        for record in records:
+
+            # we format the record ourselves because I
+            # don't like BioPython's fasta rendering.
+            fasta = '>%s\n%s' % (record.description, record.seq)
+
+            print >> output_handle, fasta
+
+    output_handle.close()
+
+if __name__ == '__main__':
+    main()
