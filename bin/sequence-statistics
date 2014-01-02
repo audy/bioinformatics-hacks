@@ -61,6 +61,16 @@ class Stats:
             if t < test_sum:
                 return i
 
+    @classmethod
+    def standard_deviation(self, a):
+        ''' Return standard deviation of a list of numbers
+
+        >>> Stats.standard_deviation([1, 1, 0, -1, -1])
+        0.89442719099991586
+
+        '''
+        return numpy.std(a)
+
 
 def parse_args():
     ''' return arguments
@@ -89,7 +99,6 @@ def setup_logging(logfile='/dev/stderr', verbose=False):
 
 def main():
     '''
-        >>> main() # stuff happens
     '''
 
     args = parse_args()
@@ -109,6 +118,7 @@ def main():
     print 'LENGTH STATISTICS:'
     print 'mean: %s' % Stats.mean(lengths)
     print 'median: %s' % Stats.median(lengths)
+    print 'std: %s' % Stats.standard_deviation(lengths)
     print 'n50: %s' % Stats.n50(lengths)
 
 
