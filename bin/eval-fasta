@@ -7,13 +7,15 @@
 # eval-fasta --fasta-file seqs.fasta --param 'len(r)' # print lengths of sequences.
 
 import argparse
+import re
 from Bio import SeqIO
 
 def parse_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-f', '--fasta-file', default='/dev/stdin')
-    parser.add_argument('-p', '--proc', default=True, type=str)
+    parser.add_argument('-p', '--proc', type=str)
+    parser.add_argument('-s', '--skip-fail', default=False, action='store_true', help='Skip sequence if theres an exception')
 
     return parser.parse_args()
 
@@ -26,7 +28,13 @@ def main():
         records = SeqIO.parse(handle, 'fasta')
 
         for r in records:
-            print eval(args.param)
+            try:
+                print eval(args.proc)
+            except Exception as e:
+                if args.skip_fail:
+                    continue
+                else:
+                    raise e
 
 
 if __name__ == '__main__':
