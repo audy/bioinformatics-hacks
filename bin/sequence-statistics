@@ -17,14 +17,42 @@ class Stats:
 
     @classmethod
     def mean(self, a):
+        ''' Return mean of a list of integers
+
+        >>> Stats.mean([1, 2, 3])
+        2.0
+        >>> Stats.mean([0, 1, -1])
+        0.0
+        >>> Stats.mean([0, 0, 0])
+        0.0
+
+        '''
+
         return numpy.mean(a)
 
     @classmethod
     def median(self, a):
+        ''' Return median of a list of integers
+
+        >>> Stats.median([1, 2, 3])
+        2.0
+        >>> Stats.median([0, 1, 1])
+        1.0
+        >>> Stats.median([0, 0, 1])
+        0.0
+        '''
+
         return numpy.median(a)
 
     @classmethod
     def n50(self, a):
+        ''' Return N50 of a list of integers
+        >>> Stats.n50([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        7
+        >>> Stats.n50([0, 100, 100, 100, 100, 100, 100, 101])
+        100
+        '''
+
         t = sum(a)/2.0
         lengths = reversed(sorted(a))
         test_sum = 0
@@ -32,8 +60,6 @@ class Stats:
             test_sum += i
             if t < test_sum:
                 return i
-
-
 
 
 def parse_args():
@@ -87,5 +113,6 @@ def main():
 
 
 if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
     main()
-
