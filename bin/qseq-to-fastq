@@ -7,6 +7,10 @@ to a single, interleaved fastq file
 
 qseq_to_fastq --left left_reads.txt --right right_reads.txt --out interleaved.fastq
 
+or
+
+qseq_to_fasta --left left_reads.txt --out left_reads.fastq
+
 '''
 
 import argparse
@@ -15,10 +19,10 @@ from itertools import izip
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--left')
-    parser.add_argument('--right')
+    parser.add_argument('--left', default='/dev/stdin')
+    parser.add_argument('--right', default=False, help='optional')
 
-    parser.add_argument('--out', default='/dev/stdin')
+    parser.add_argument('--out', default='/dev/stdout')
 
     return parser.parse_args()
 
@@ -34,21 +38,33 @@ def to_fasta(s):
     return '@%s\n%s\n+%s\n%s' % (header, sequence, header, quality)
 
 
+
+def flatten(iterable):
+    ''' Flatten a list of lists (but go no further) '''
+    for i in iterable:
+        for j in i:
+            yield j
+
+
 def main():
 
     args = parse_args()
 
     left_handle = open(args.left)
-    right_handle = open(args.right)
+
+    if args.right:
+        right_handle = open(args.right)
+        iterator = izip(left_handle, right_handle)
+    else:
+        iterator = izip(left_handle)
+
+    iterator = flatten(iterator)
+
     out_handle = open(args.out, 'w')
 
-    for l, r in izip(left_handle, right_handle):
-
-        l_fasta = to_fasta(l)
-        r_fasta = to_fasta(r)
-
-        print >> out_handle, l_fasta
-        print >> out_handle, r_fasta
+    for record in iterator:
+        fasta = to_fasta(record)
+        print >> out_handle, fasta
 
 
 
