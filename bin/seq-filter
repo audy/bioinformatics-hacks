@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 
-# Filter fasta file by some arbitrary parameter.
+# Filter sequence file by some arbitrary parameter.
+
+# Example
+
+# Filter any reads less than 50nt in input.fastq and save to output.fastq
+#
+# bin/seq-filter --input input.fastq --output output.fastq --format fastq --param 'len(r) > 50'
+#
 
 import argparse
 from Bio import SeqIO
