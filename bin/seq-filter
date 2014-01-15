@@ -9,7 +9,8 @@ import re
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--fasta-file', default='/dev/stdin')
+    parser.add_argument('--input', default='/dev/stdin')
+    parser.add_argument('--format', default='fasta')
     parser.add_argument('--output', default='/dev/stdout')
     parser.add_argument('--param', default=True, type=str)
     parser.add_argument('--skip-fail', help='do not print record if an exception is raised', default=False, action='store_true')
@@ -21,8 +22,8 @@ def main():
 
     args = parse_args()
 
-    with open(args.fasta_file) as handle:
-        records = SeqIO.parse(handle, 'fasta')
+    with open(args.input) as handle:
+        records = SeqIO.parse(handle, args.format)
 
         out_handle = open(args.output, 'w')
 
@@ -38,7 +39,7 @@ def main():
                     raise e
 
             if print_record:
-                print >> out_handle, r.format('fasta')
+                print >> out_handle, r.format(args.format)
 
         out_handle.close()
 
