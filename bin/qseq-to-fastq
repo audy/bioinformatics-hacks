@@ -15,15 +15,16 @@ from itertools import izip
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--left')
+    parser.add_argument('--left', required=True)
     parser.add_argument('--right')
+    parser.add_argument('--barcode', default=None)
 
     parser.add_argument('--out', default='/dev/stdin')
 
     return parser.parse_args()
 
 
-def to_fasta(s):
+def to_fasta(s, label=None):
 
     s = s.strip().split('\t')
 
@@ -31,7 +32,14 @@ def to_fasta(s):
     sequence = s[8].replace('.', 'N')
     quality = s[9]
 
+    if label != None:
+        header += ':' + label
+
     return '@%s\n%s\n+%s\n%s' % (header, sequence, header, quality)
+
+
+def add_barcode_to_header(seq, barcode):
+    seq.description += barcode
 
 
 def main():
@@ -40,12 +48,20 @@ def main():
 
     left_handle = open(args.left)
     right_handle = open(args.right)
+
+    if args.barcode != None:
+        bc_handle = open(args.barcode)
+
     out_handle = open(args.out, 'w')
 
     for l, r in izip(left_handle, right_handle):
+        if args.barcode:
+            bc_sequence = bc_handle.next().split("\t")[8].replace('.', 'N')
+        else:
+            bc_sequence = None
 
-        l_fasta = to_fasta(l)
-        r_fasta = to_fasta(r)
+        l_fasta = to_fasta(l, label=bc_sequence)
+        r_fasta = to_fasta(r, label=bc_sequence)
 
         print >> out_handle, l_fasta
         print >> out_handle, r_fasta
