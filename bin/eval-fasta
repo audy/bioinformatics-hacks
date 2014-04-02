@@ -26,7 +26,7 @@ def main():
         records = SeqIO.parse(handle, 'fasta')
 
         for r in records:
-            print eval(args.param)
+            print eval(args.proc)
 
 
 if __name__ == '__main__':
