@@ -1,0 +1,128 @@
+#!/usr/bin/env python
+
+# Calculate various statistics on a fasta/fastq file
+
+import argparse
+import logging
+
+from Bio import SeqIO
+
+import numpy
+
+class Stats:
+    ''' Wrapper class for statisticl functions.
+    In the future, remove numpy dependency and replace
+    with the statistics in the Python 3.4 stdlib.
+    '''
+
+    @classmethod
+    def mean(self, a):
+        ''' Return mean of a list of integers
+
+        >>> Stats.mean([1, 2, 3])
+        2.0
+        >>> Stats.mean([0, 1, -1])
+        0.0
+        >>> Stats.mean([0, 0, 0])
+        0.0
+
+        '''
+
+        return numpy.mean(a)
+
+    @classmethod
+    def median(self, a):
+        ''' Return median of a list of integers
+
+        >>> Stats.median([1, 2, 3])
+        2.0
+        >>> Stats.median([0, 1, 1])
+        1.0
+        >>> Stats.median([0, 0, 1])
+        0.0
+        '''
+
+        return numpy.median(a)
+
+    @classmethod
+    def n50(self, a):
+        ''' Return N50 of a list of integers
+        >>> Stats.n50([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        7
+        >>> Stats.n50([0, 100, 100, 100, 100, 100, 100, 101])
+        100
+        '''
+
+        t = sum(a)/2.0
+        lengths = reversed(sorted(a))
+        test_sum = 0
+        for i in lengths:
+            test_sum += i
+            if t < test_sum:
+                return i
+
+    @classmethod
+    def standard_deviation(self, a):
+        ''' Return standard deviation of a list of numbers
+
+        >>> Stats.standard_deviation([1, 1, 0, -1, -1])
+        0.89442719099991586
+
+        '''
+        return numpy.std(a)
+
+
+def parse_args():
+    ''' return arguments
+        >>> args = parse_args()
+    '''
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--log', default='/dev/stderr', help='log file (default=stderr)')
+    parser.add_argument('--verbose', default=False, action='store_true')
+    parser.add_argument('--input', '-i', default='/dev/stdin')
+    parser.add_argument('--format', default='fasta', help='input format: fasta (default) or fastq')
+    parser.add_argument('--output', '-o', default='/dev/stdout')
+
+    return parser.parse_args()
+
+
+def setup_logging(logfile='/dev/stderr', verbose=False):
+
+    if verbose:
+        level = logging.DEBUG
+    else:
+        level = logging.ERROR
+
+    return logging.basicConfig(filename=logfile, level=level)
+
+
+def main():
+    '''
+    '''
+
+    args = parse_args()
+
+    setup_logging(logfile=args.log, verbose=args.verbose)
+
+    logging.info('args: %s' % args)
+
+    lengths = []
+
+    with open(args.input) as handle:
+        records = SeqIO.parse(handle, args.format)
+
+        for record in records:
+            lengths.append(len(record))
+
+    print 'LENGTH STATISTICS:'
+    print 'mean: %s' % Stats.mean(lengths)
+    print 'median: %s' % Stats.median(lengths)
+    print 'std: %s' % Stats.standard_deviation(lengths)
+    print 'n50: %s' % Stats.n50(lengths)
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+    main()
