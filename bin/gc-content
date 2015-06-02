@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+
+import argparse
+import logging
+
+import re
+
+from Bio import SeqIO
+
+def parse_args():
+    '''
+    return arguments
+    >>> args = parse_args()
+
+    '''
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--log', default='/dev/stderr',
+                        help='log file (default=stderr)')
+    parser.add_argument('--output', default='/dev/stdout')
+    parser.add_argument('--input', default='/dev/stdin')
+    parser.add_argument('--format', default='fasta')
+    parser.add_argument('--width', default=1000, type=int)
+    parser.add_argument('--step', default=10, type=int)
+    parser.add_argument('--motif', default='[GC]', type=re.compile)
+    return parser.parse_args()
+
+
+def sliding_windows(seq, width, step):
+    for i in range(0, len(seq), step):
+        j = i + width
+        yield (i, j, seq[i:j])
+
+
+def sliding_window_count_matches(seq, width, step, motif):
+    for i, j, sub in sliding_windows(seq, width, step):
+        matches = len(motif.findall(sub))
+        p = matches/float(len(sub))
+        yield (i, j, p)
+
+
+def main():
+    '''
+        >>> main() # stuff happens
+    '''
+
+    args = parse_args()
+    logging.basicConfig(filename=args.log, level=logging.INFO)
+
+    logging.info(args)
+
+    with open(args.input) as handle:
+        records = list(SeqIO.parse(handle, args.format))
+
+    output = open(args.output, 'w')
+
+    for record in records:
+        seq = str(record.seq)
+        for i, j, p, in sliding_window_count_matches(seq,
+                args.width,
+                args.step,
+                args.motif):
+            print >> output, '%s\t%s\t%s\t%s' % (
+                    record.id,
+                    i,
+                    j,
+                    p)
+
+    output.close()
+
+if __name__ == '__main__':
+    main()
