@@ -14,5 +14,6 @@ bin
 ├── qseq-to-fastq - convert QSEQ file to FASTQ file
 ├── gc-content - measure GC content along a sliding window (can measure any "motif")
 ├── seq-convert - arbitrarily convert between BioPython SeqIO formats
+├── concatenate-annotation - concatenate scaffolds in a genbank annotation
 └── sequence-statistics - calculate various stats on sequence lengths (mean, median, n50)
 ```
