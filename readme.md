@@ -5,8 +5,11 @@ Austin G. Davis-Richardson
 A collection of Python scripts I use for random bioinformatics-related
 tasks.
 
+![jurassic park dna manipulation](bioinformatics.jpg)
+
 ```
 bin
+├── babelfish - convert between fasta/gbk/gff or whatever BioPython supports
 ├── eval-fasta - evaluate arbitrary Python code on records in a fasta file
 ├── fasta-to-phylip - convert FASTA alignment to Phylip format
 ├── fastq-to-fasta - convert FASTQ file to FASTA file
