@@ -5,8 +5,6 @@ Austin G. Davis-Richardson
 A collection of Python scripts I use for random bioinformatics-related
 tasks.
 
-![jurassic park dna manipulation](bioinformatics.jpg)
-
 ```
 bin
 ├── babelfish - convert between fasta/gbk/gff or whatever BioPython supports
@@ -20,3 +18,5 @@ bin
 ├── concatenate-annotation - concatenate scaffolds in a genbank annotation
 └── sequence-statistics - calculate various stats on sequence lengths (mean, median, n50)
 ```
+
+![jurassic park dna manipulation](bioinformatics.jpg)
