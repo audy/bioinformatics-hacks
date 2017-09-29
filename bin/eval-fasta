@@ -27,7 +27,7 @@ def main():
     with open(args.fasta_file) as handle:
         records = SeqIO.parse(handle, 'fasta')
 
-        for r in records:
+        for n, r in enumerate(records):
             try:
                 print eval(args.proc)
             except Exception as e:
