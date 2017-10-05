@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+
+from Bio import SeqIO
+
+with open('/dev/stdin') as handle:
+  products = (
+    product
+    for record in SeqIO.parse(handle, 'genbank')
+    for feature in record.features
+    if 'product' in feature.qualifiers
+    for product in feature.qualifiers['product']
+    if feature.type == 'CDS'
+  )
+
+  for product in products:
+      print(product)
