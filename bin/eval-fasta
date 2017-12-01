@@ -29,7 +29,7 @@ def main():
 
         for n, r in enumerate(records):
             try:
-                print eval(args.proc)
+                print(eval(args.proc))
             except Exception as e:
                 if args.skip_fail:
                     continue
