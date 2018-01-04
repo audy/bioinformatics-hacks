@@ -34,7 +34,7 @@ def main():
 
         out_handle = open(args.output, 'w')
 
-        for r in records:
+        for n, r in enumerate(records):
             print_record = False
 
             try:

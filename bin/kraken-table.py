@@ -78,7 +78,7 @@ def main():
 
         writer.writeheader()
 
-        for input, otu_counts in input_otu_counts.items():
+        for input, otu_counts in list(input_otu_counts.items()):
             otu_counts['input'] = input
             writer.writerow(otu_counts)
 
