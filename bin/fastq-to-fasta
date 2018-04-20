@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Convert a FASTQ file to a FASTA file (remove quality scores)
 
@@ -28,9 +28,8 @@ def main():
 
             # we format the record ourselves because I
             # don't like BioPython's fasta rendering.
-            fasta = '>%s\n%s' % (record.description, record.seq)
-
-            print >> output_handle, fasta
+            fasta = '>%s\n%s\n' % (record.description, record.seq)
+            output.handle.write(fasta)
 
     output_handle.close()
 
