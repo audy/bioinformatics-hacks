@@ -19,17 +19,10 @@ def main():
 
     args = parse_args()
 
-    output_handle = open(args.fasta, 'w')
-
-    with open(args.fastq) as input_handle:
+    with open(args.fastq) as input_handle, open(args.fasta, 'w') as output_handle:
         records = SeqIO.parse(input_handle, 'fastq')
-
         for record in records:
-
-            # we format the record ourselves because I
-            # don't like BioPython's fasta rendering.
-            fasta = '>%s\n%s\n' % (record.description, record.seq)
-            output.handle.write(fasta)
+            handle.write(record.format('fasta'))
 
     output_handle.close()
 
