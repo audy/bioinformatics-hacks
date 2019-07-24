@@ -11,11 +11,11 @@ gene_sets = []
 for path in sys.argv[1:]:
     gene_set = set()
     with open(path) as handle:
-        for scaffold in SeqIO.parse(handle, 'genbank'):
+        for scaffold in SeqIO.parse(handle, "genbank"):
             for feature in scaffold.features:
-                if feature.type == 'CDS':
-                    if 'gene' in feature.qualifiers:
-                        gene_set.add(feature.qualifiers['gene'][0])
+                if feature.type == "CDS":
+                    if "gene" in feature.qualifiers:
+                        gene_set.add(feature.qualifiers["gene"][0])
     gene_sets.append(gene_set)
 
 for i in gene_sets[1] - gene_sets[0]:

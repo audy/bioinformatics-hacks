@@ -4,6 +4,7 @@ import argparse
 import re
 from Bio import SeqIO
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
 

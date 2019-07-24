@@ -13,14 +13,20 @@ import argparse
 from Bio import SeqIO
 import re
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--input', default='/dev/stdin')
-    parser.add_argument('--format', default='fasta')
-    parser.add_argument('--output', default='/dev/stdout')
-    parser.add_argument('--param', default=True, type=str)
-    parser.add_argument('--skip-fail', help='do not print record if an exception is raised', default=False, action='store_true')
+    parser.add_argument("--input", default="/dev/stdin")
+    parser.add_argument("--format", default="fasta")
+    parser.add_argument("--output", default="/dev/stdout")
+    parser.add_argument("--param", default=True, type=str)
+    parser.add_argument(
+        "--skip-fail",
+        help="do not print record if an exception is raised",
+        default=False,
+        action="store_true",
+    )
 
     return parser.parse_args()
 
@@ -32,7 +38,7 @@ def main():
     with open(args.input) as handle:
         records = SeqIO.parse(handle, args.format)
 
-        out_handle = open(args.output, 'w')
+        out_handle = open(args.output, "w")
 
         for n, r in enumerate(records):
             print_record = False
@@ -51,6 +57,5 @@ def main():
         out_handle.close()
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

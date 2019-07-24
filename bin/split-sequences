@@ -7,18 +7,20 @@ import os
 
 from Bio import SeqIO
 
+
 def parse_args():
-    ''' return arguments
+    """ return arguments
         >>> args = parse_args()
-    '''
+    """
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--log', default='/dev/stderr',
-                        help='log file (default=stderr)')
-    parser.add_argument('--input', default='/dev/stdin')
-    parser.add_argument('--chunk-size', type=int)
-    parser.add_argument('--out-dir', default='chunks')
-    parser.add_argument('--format', default='fasta')
+    parser.add_argument(
+        "--log", default="/dev/stderr", help="log file (default=stderr)"
+    )
+    parser.add_argument("--input", default="/dev/stdin")
+    parser.add_argument("--chunk-size", type=int)
+    parser.add_argument("--out-dir", default="chunks")
+    parser.add_argument("--format", default="fasta")
     return parser.parse_args()
 
 
@@ -36,13 +38,13 @@ def main():
         for i, record in enumerate(SeqIO.parse(handle, args.format)):
             if i % args.chunk_size == 0:
                 chunk += 1
-                logging.info('writing to chunk %s' % chunk)
-                out = open('%s/chunk-%s.%s' % (args.out_dir, chunk, args.format), 'w')
+                logging.info("writing to chunk %s" % chunk)
+                out = open("%s/chunk-%s.%s" % (args.out_dir, chunk, args.format), "w")
 
             out.write(record.format(args.format))
 
     out.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

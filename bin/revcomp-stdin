@@ -2,7 +2,6 @@
 
 from Bio.Seq import Seq
 
-with open('/dev/stdin') as handle:
+with open("/dev/stdin") as handle:
     for line in handle:
         print(Seq(line.strip()).reverse_complement())
-

@@ -2,8 +2,8 @@
 
 from Bio import SeqIO
 
-with open('/dev/stdin') as handle:
-    records = SeqIO.parse(handle, 'fasta')
+with open("/dev/stdin") as handle:
+    records = SeqIO.parse(handle, "fasta")
 
     for record in records:
-        print(record.format('fasta'))
+        print(record.format("fasta"))

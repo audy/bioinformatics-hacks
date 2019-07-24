@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__DESCRIPTION__ = '''
+__DESCRIPTION__ = """
 
 qseq to fastq - convert two qseq files from paired-end sequencing
 to a single, interleaved fastq file
@@ -11,42 +11,44 @@ or
 
 qseq_to_fasta --left left_reads.txt --out left_reads.fastq
 
-'''
+"""
 
 import argparse
 from itertools import izip
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--left', required=True, default='/dev/stdin')
-    parser.add_argument('--right', help='optional (will interleave)')
-    parser.add_argument('--barcode', default=None, help='optional (added to header)')
+    parser.add_argument("--left", required=True, default="/dev/stdin")
+    parser.add_argument("--right", help="optional (will interleave)")
+    parser.add_argument("--barcode", default=None, help="optional (added to header)")
 
-    parser.add_argument('--out', default='/dev/stdout')
+    parser.add_argument("--out", default="/dev/stdout")
 
     return parser.parse_args()
 
 
 def to_fasta(s, label=None):
 
-    s = s.strip().split('\t')
+    s = s.strip().split("\t")
 
-    header = ':'.join(s[0:8])
-    sequence = s[8].replace('.', 'N')
+    header = ":".join(s[0:8])
+    sequence = s[8].replace(".", "N")
     quality = s[9]
 
     if label != None:
-        header += ':' + label
+        header += ":" + label
 
-    return '@%s\n%s\n+%s\n%s' % (header, sequence, header, quality)
+    return "@%s\n%s\n+%s\n%s" % (header, sequence, header, quality)
 
 
 def add_barcode_to_header(seq, barcode):
     seq.description += barcode
 
+
 def flatten(iterable):
-    ''' Flatten a list of lists (but go no further) '''
+    """ Flatten a list of lists (but go no further) """
     for i in iterable:
         for j in i:
             yield j
@@ -62,11 +64,11 @@ def main():
     if args.barcode != None:
         bc_handle = open(args.barcode)
 
-    out_handle = open(args.out, 'w')
+    out_handle = open(args.out, "w")
 
     for l, r in izip(left_handle, right_handle):
         if args.barcode:
-            bc_sequence = bc_handle.next().split("\t")[8].replace('.', 'N')
+            bc_sequence = bc_handle.next().split("\t")[8].replace(".", "N")
         else:
             bc_sequence = None
 
@@ -74,7 +76,5 @@ def main():
         r_fasta = to_fasta(r, label=bc_sequence)
 
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
