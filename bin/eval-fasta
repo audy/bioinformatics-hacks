@@ -1,11 +1,5 @@
 #!/usr/bin/env python
 
-# Evaluate code on SeqIO record objects for each fasta record
-# in the input stream.
-
-# Example
-# eval-fasta --fasta-file seqs.fasta --param 'len(r)' # print lengths of sequences.
-
 import argparse
 import re
 from Bio import SeqIO
@@ -13,9 +7,16 @@ from Bio import SeqIO
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-f', '--fasta-file', default='/dev/stdin')
-    parser.add_argument('-p', '--proc', type=str)
-    parser.add_argument('-s', '--skip-fail', default=False, action='store_true', help='Skip sequence if theres an exception')
+    parser.add_argument("-i", "--input", default="/dev/stdin")
+    parser.add_argument("-p", "--proc", type=str)
+    parser.add_argument(
+        "-s",
+        "--skip-fail",
+        default=False,
+        action="store_true",
+        help="Skip sequence if theres an exception",
+    )
+    parser.add_argument("--format", defaukt="fasta")
 
     return parser.parse_args()
 
@@ -25,7 +26,7 @@ def main():
     args = parse_args()
 
     with open(args.fasta_file) as handle:
-        records = SeqIO.parse(handle, 'fasta')
+        records = SeqIO.parse(handle, args.format)
 
         for n, r in enumerate(records):
             try:
@@ -37,5 +38,5 @@ def main():
                     raise e
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
