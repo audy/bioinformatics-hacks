@@ -23,7 +23,7 @@ def main():
     with open(args.fastq) as input_handle, open(args.fasta, "w") as output_handle:
         records = SeqIO.parse(input_handle, "fastq")
         for record in records:
-            handle.write(record.format("fasta"))
+            output_handle.write(record.format("fasta"))
 
     output_handle.close()
 
