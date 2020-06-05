@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import re
@@ -17,7 +17,7 @@ def parse_args():
         action="store_true",
         help="Skip sequence if theres an exception",
     )
-    parser.add_argument("--format", defaukt="fasta")
+    parser.add_argument("--format", default="fasta")
 
     return parser.parse_args()
 

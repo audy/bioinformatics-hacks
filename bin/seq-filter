@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Filter sequence file by some arbitrary parameter.
 
@@ -52,7 +52,7 @@ def main():
                     raise e
 
             if print_record:
-                print >> out_handle, r.format(args.format)
+                out_handle.write(r.format(args.format))
 
         out_handle.close()
 
